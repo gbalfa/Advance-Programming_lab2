@@ -43,8 +43,7 @@ void push(struct List *list, double key) {
   new_node->next = (list->head);
 
   /* change prev of head node to new node */
-  if (list->head != NULL)
-    (list->head)->prev = new_node;
+  if (list->head != NULL) (list->head)->prev = new_node;
 
   /* move the head to point to the new node */
   list->head = new_node;
@@ -80,8 +79,7 @@ void append(struct List *list, double key) {
   new_node->prev = (list->tail);
 
   /* change next of tail node to new node */
-  if (list->tail != NULL)
-    (list->tail)->next = new_node;
+  if (list->tail != NULL) (list->tail)->next = new_node;
 
   /* move the tail to point to the new node */
   list->tail = new_node;
@@ -99,17 +97,16 @@ void append(struct List *list, double key) {
  *
  *  \param n: Polynomial degree.
  */
-struct List *GenerateList(FILE * file) {
+struct List *GenerateList(FILE *file) {
   /* Intializes list */
-  struct List *new_list =
-      (struct List *)malloc(sizeof(struct List));
+  struct List *new_list = (struct List *)malloc(sizeof(struct List));
   new_list->head = NULL;
   new_list->tail = NULL;
   int i;
   double x;
   i = 0;
-  while (1 == fscanf(file, "%le", &x)){
-      push(new_list, x);
+  while (1 == fscanf(file, "%le", &x)) {
+    push(new_list, x);
     i++;
   }
   printf("%d\n", i);
@@ -147,7 +144,7 @@ void printList(struct List *poly) {
 
   /* the rest of the nodes */
   while (node != NULL) {
-  printf("%ef", node->key);
+    printf("%ef", node->key);
     node = node->next;
   }
   printf("\n");
