@@ -18,8 +18,7 @@ int height(struct AVLNode *AVLNode) {
 // A utility function to get maximum of two integers
 int max(int a, int b) { return (a > b) ? a : b; }
 
-/* Helper function that allocates a new AVLNode with the given key and
-        NULL left and right pointers. */
+/* newAVLNode */
 struct AVLNode *newAVLNode(int key) {
   struct AVLNode *AVLNode = (struct AVLNode *)malloc(sizeof(struct AVLNode));
   AVLNode->key = key;
@@ -115,13 +114,13 @@ struct AVLNode *insert(struct AVLNode *AVLNode, int key) {
   return AVLNode;
 }
 
-/* Given a binary tree, print its AVLNodes in inorder*/
+/* Given a binary tree, print its AVLNodes in inorder */
 void printInorder(struct AVLNode *AVLNode) {
   if (AVLNode == NULL) return;
   /* first recur on left child */
   printInorder(AVLNode->left);
   /* then print the data of AVLNode */
-  printf("%lf ", AVLNode->key);
+  printf("%le ", AVLNode->key);
   /* now recur on right child */
   printInorder(AVLNode->right);
 }
@@ -143,4 +142,14 @@ struct AVLNode *GenerateAVL(FILE *file) {
   printf("%d\n", i);
   return root;
 }
-/* printInorder(root); */
+
+/* free AVL */
+void freeAVL(struct AVLNode *AVLNode) {
+  if (AVLNode == NULL) return;
+  /* first recur on left child */
+  freeAVL(AVLNode->left);
+  /* now recur on right child */
+  freeAVL(AVLNode->right);
+  /* then free the AVLNode */
+  free(AVLNode);
+}

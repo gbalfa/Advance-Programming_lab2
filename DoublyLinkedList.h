@@ -91,11 +91,11 @@ void append(struct List *list, double key) {
 }
 
 /**
- *  \brief Generates the polynomial.
+ *  \brief Generates the list.
  *
- *  Generates a random polynomial pushing (n+1) nodes into a doublylinkedlist.
+ *  Generates a list pushing nodes into a doublylinkedlist.
  *
- *  \param n: Polynomial degree.
+ *  \param n: FILE
  */
 struct List *GenerateList(FILE *file) {
   /* Intializes list */
@@ -109,7 +109,7 @@ struct List *GenerateList(FILE *file) {
     push(new_list, x);
     i++;
   }
-  printf("%d\n", i);
+  /* printf("%d\n", i); */
   return new_list;
 }
 
@@ -139,12 +139,12 @@ void printList(struct List *poly) {
   struct Node *node = poly->head;
 
   /* first node */
-  printf("%ef", node->key);
+  printf("%ef\t", node->key);
   node = node->next;
 
   /* the rest of the nodes */
   while (node != NULL) {
-    printf("%ef", node->key);
+    printf("%ef\t", node->key);
     node = node->next;
   }
   printf("\n");

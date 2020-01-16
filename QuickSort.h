@@ -1,41 +1,60 @@
+#include "DoublyLinkedList.h"
 /**
  *  \brief Swap
  */
-void Swap(double A[], int i, int j) {
-  double tmp = A[i];
-  A[i] = A[j];
-  A[j] = tmp;
+void Swap(struct Node *a, struct Node *b) {
+  double tmp = a->key;
+  a->key = b->key;
+  b->key = tmp;
 }
 
 /**
  *  \brief Hoare partition algorithm.
  */
-int HoarePartition(double A[], int start, int end) {
-  double p = A[start];
-  int i = start, j = end + 1;
-  while (i < j) {
-    while (j > start) {
-      --j;
-      if (A[j] <= p) break;
+struct Node *HoarePartition(struct Node *start, struct Node *end) {
+  double p = start->key;
+  struct Node *i = start, *j = end->next;
+  while (i != j && i->prev != j) {
+    while (j != start) {
+      j = j->prev;
+      if (j->key <= p) break;
     }
-    while (i < end) {
-      ++i;
-      if (A[i] >= p) break;
+    while (i != end) {
+      i = i->next;
+      if (i->key >= p) break;
     }
-    Swap(A, i, j);
+    Swap(i, j);
   }
-  Swap(A, i, j);
-  Swap(A, start, j);
+  Swap(i, j);
+  Swap(start, j);
   return j;
 }
 
 /**
- *  \brief QuickSort
+ *  \brief QuickSort auxiliar function.
  */
-void QuickSort(double A[], int start, int end) {
-  if (start < end) {
-    double s = HoarePartition(A, start, end);
-    QuickSort(A, start, s - 1);
-    QuickSort(A, s + 1, end);
+void _QuickSort(struct Node *start, struct Node *end) {
+  if (end != NULL && start != end && start != end->next) {
+    struct Node *s = HoarePartition(start, end);
+    _QuickSort(start, s->prev);
+    _QuickSort(s->next, end);
   }
+}
+
+/**
+ *  \brief Quicksort.
+ *
+ *  Quicksort using a doubly linked list and Hoarepartition.
+ */
+void QuickSort(struct List *lista){
+  struct Node *sentinel = (struct Node*)malloc(sizeof(struct Node));
+  sentinel->key = 0;
+  sentinel->next = NULL;
+  sentinel->prev = lista->tail;
+  lista->tail->next = sentinel;
+
+  _QuickSort(lista->head, lista->tail);
+
+  lista->tail->next = NULL;
+  free(sentinel);
 }
