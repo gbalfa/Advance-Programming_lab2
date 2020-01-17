@@ -46,8 +46,8 @@ void _QuickSort(struct Node *start, struct Node *end) {
  *
  *  Quicksort using a doubly linked list and Hoarepartition.
  */
-void QuickSort(struct List *lista){
-  struct Node *sentinel = (struct Node*)malloc(sizeof(struct Node));
+void QuickSort(struct List *lista) {
+  struct Node *sentinel = (struct Node *)malloc(sizeof(struct Node));
   sentinel->key = 0;
   sentinel->next = NULL;
   sentinel->prev = lista->tail;

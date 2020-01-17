@@ -9,6 +9,7 @@
 struct List {
   struct Node *head;
   struct Node *tail;
+  int n;
 };
 
 /* A node of the doubly linked list polynomial */
@@ -109,6 +110,7 @@ struct List *GenerateList(FILE *file) {
     push(new_list, x);
     i++;
   }
+  new_list->n = i;
   /* printf("%d\n", i); */
   return new_list;
 }
