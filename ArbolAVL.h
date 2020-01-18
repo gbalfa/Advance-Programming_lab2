@@ -1,3 +1,7 @@
+#ifndef ARBOLAVL_H
+#define ARBOLAVL_H
+
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -7,6 +11,7 @@ struct AVLNode {
   struct AVLNode *left;
   struct AVLNode *right;
   int height;
+  int count;
 };
 
 // A utility function to get the height of the tree
@@ -19,12 +24,13 @@ int height(struct AVLNode *AVLNode) {
 int max(int a, int b) { return (a > b) ? a : b; }
 
 /* newAVLNode */
-struct AVLNode *newAVLNode(int key) {
+struct AVLNode *newAVLNode(double key) {
   struct AVLNode *AVLNode = (struct AVLNode *)malloc(sizeof(struct AVLNode));
   AVLNode->key = key;
   AVLNode->left = NULL;
   AVLNode->right = NULL;
   AVLNode->height = 1;  // new AVLNode is initially added at leaf
+  AVLNode->count = 1;
   return (AVLNode);
 }
 
@@ -70,7 +76,7 @@ int getBalance(struct AVLNode *N) {
 
 // Recursive function to insert a key in the subtree rooted
 // with AVLNode and returns the new root of the subtree.
-struct AVLNode *insert(struct AVLNode *AVLNode, int key) {
+struct AVLNode *insert(struct AVLNode *AVLNode, double key) {
   /* 1. Perform the normal BST insertion */
   if (AVLNode == NULL) return (newAVLNode(key));
 
@@ -78,8 +84,10 @@ struct AVLNode *insert(struct AVLNode *AVLNode, int key) {
     AVLNode->left = insert(AVLNode->left, key);
   else if (key > AVLNode->key)
     AVLNode->right = insert(AVLNode->right, key);
-  else  // Equal keys are not allowed in BST
+  else {  // Equal keys
+    ++AVLNode->count;
     return AVLNode;
+  }
 
   /* 2. Update height of this ancestor AVLNode */
   AVLNode->height = 1 + max(height(AVLNode->left), height(AVLNode->right));
@@ -120,7 +128,7 @@ void printInorder(struct AVLNode *AVLNode) {
   /* first recur on left child */
   printInorder(AVLNode->left);
   /* then print the data of AVLNode */
-  printf("%le ", AVLNode->key);
+  printf("%lf\t", AVLNode->key);
   /* now recur on right child */
   printInorder(AVLNode->right);
 }
@@ -139,7 +147,6 @@ struct AVLNode *GenerateAVL(FILE *file) {
     root = insert(root, x);
     i++;
   }
-  printf("%d\n", i);
   return root;
 }
 
@@ -153,3 +160,5 @@ void freeAVL(struct AVLNode *AVLNode) {
   /* then free the AVLNode */
   free(AVLNode);
 }
+
+#endif /* ARBOLAVL_H */

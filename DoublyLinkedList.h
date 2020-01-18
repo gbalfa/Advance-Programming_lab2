@@ -1,5 +1,5 @@
-#ifndef DOUBLYLINKEDLISTNODE_H
-#define DOUBLYLINKEDLISTNODE_H
+#ifndef DOUBLYLINKEDLIST_H
+#define DOUBLYLINKEDLIST_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -153,4 +153,4 @@ void printList(struct List *poly) {
   return;
 }
 
-#endif /* DOUBLYLINKEDLISTNODE_H */
+#endif /* DOUBLYLINKEDLIST_H */

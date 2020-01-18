@@ -1,12 +1,14 @@
 #include <math.h>
+
 #include "DoublyLinkedList.h"
 
 /**
  *  \brief Merge auxiliar function 2.
  */
-struct Node *Merge(struct Node *B, struct Node *C, struct Node *B_tail, struct Node *C_tail, struct Node **tail) {
-  if(B == NULL) return C;
-  if(C == NULL) return B;
+struct Node *Merge(struct Node *B, struct Node *C, struct Node *B_tail,
+                   struct Node *C_tail, struct Node **tail) {
+  if (B == NULL) return C;
+  if (C == NULL) return B;
   struct Node *i = B, *j = C, *A = NULL, *tmp, *new_tail;
   if (i->key <= j->key) {
     tmp = i->next;
@@ -36,11 +38,10 @@ struct Node *Merge(struct Node *B, struct Node *C, struct Node *B_tail, struct N
       j = tmp;
     }
   }
-  if (i == NULL){
+  if (i == NULL) {
     new_tail->next = j;
     new_tail = C_tail;
-  }
-  else{
+  } else {
     new_tail->next = i;
     new_tail = B_tail;
   }
@@ -57,13 +58,13 @@ struct Node *_MergeSort(struct Node *head, struct Node **tail, int n) {
     int h_floor = (int)floor(half), h_ceil = (int)ceil(half);
     struct Node *tmp = head, *tmp2, *A, *B, *C;
     int i = 0;
-    while(i < h_floor - 1){
+    while (i < h_floor - 1) {
       tmp = tmp->next;
       ++i;
     }
     tmp2 = tmp->next;
     tmp->next = NULL;
-    B = _MergeSort(head, &tmp,  h_floor);
+    B = _MergeSort(head, &tmp, h_floor);
     C = _MergeSort(tmp2, tail, h_ceil);
     A = Merge(B, C, tmp, (*tail), tail);
     return A;
@@ -71,7 +72,7 @@ struct Node *_MergeSort(struct Node *head, struct Node **tail, int n) {
   return head;
 }
 
-struct List *MergeSort(struct List *lista){
+struct List *MergeSort(struct List *lista) {
   lista->head = _MergeSort(lista->head, &lista->tail, lista->n);
   return lista;
 }
