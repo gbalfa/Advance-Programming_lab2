@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "DoublyLinkedList.h"
 
 // An AVL tree AVLNode
 struct AVLNode {
@@ -128,7 +129,10 @@ void printInorder(struct AVLNode *AVLNode) {
   /* first recur on left child */
   printInorder(AVLNode->left);
   /* then print the data of AVLNode */
-  printf("%lf\t", AVLNode->key);
+  int count = AVLNode->count;
+  for(;count > 0; --count){
+    printf("%lf\t", AVLNode->key);
+  }
   /* now recur on right child */
   printInorder(AVLNode->right);
 }
@@ -136,16 +140,14 @@ void printInorder(struct AVLNode *AVLNode) {
 /**
  *  \brief Creates an AVL tree from given file.
  */
-struct AVLNode *GenerateAVL(FILE *file) {
+struct AVLNode *GenerateAVL(struct List *lista) {
   // Initialices the tree root.
   struct AVLNode *root = NULL;
 
-  int i;
-  double x;
-  i = 0;
-  while (1 == fscanf(file, "%le", &x)) {
-    root = insert(root, x);
-    i++;
+  struct Node *tmp = lista->head;
+  while (tmp != NULL) {
+    root = insert(root, tmp->key);
+    tmp = tmp->next;
   }
   return root;
 }

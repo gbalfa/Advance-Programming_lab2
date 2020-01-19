@@ -4,26 +4,26 @@
 
 void medianaList(struct List *lista) {
   struct Node *aux = lista->head;
-  for (int i = 0; i != lista->n / 2; i++) {
+  for (int i = 1; i != lista->n / 2; i++) {
     aux = aux->next;
   }
-  printf("%lf\n", aux->key);
+  printf("%le\n", aux->key);
   return;
 }
 
 void cuartilesList(struct List *lista) {
   printf("\nQuartiles:\t");
   struct Node *aux = lista->head;
-  for (int i = 0; i != lista->n * 3 / 4; i++) {
+  for (int i = 1; i != lista->n * 3 / 4; i++) {
     if (i == lista->n / 4) {
-      printf("%lf\t", aux->key);
+      printf("%le\t", aux->key);
     }
     if (i == lista->n / 2) {
-      printf("%lf\t", aux->key);
+      printf("%le\t", aux->key);
     }
     aux = aux->next;
   }
-  printf("%lf\n", aux->key);
+  printf("%le\n", aux->key);
   return;
 }
 
@@ -31,9 +31,9 @@ void decilesList(struct List *lista) {
   printf("\nDeciles:\n");
   struct Node *aux = lista->head;
   int decil = 1;
-  for (int i = 0; i <= lista->n * 9 / 10; i++) {
+  for (int i = 1; i <= lista->n * 9 / 10; i++) {
     if (i == lista->n * decil / 10) {
-      printf("%lf\t", aux->key);
+      printf("%le\t", aux->key);
       ++decil;
     }
     aux = aux->next;
@@ -42,7 +42,7 @@ void decilesList(struct List *lista) {
   return;
 }
 
-double moda(struct List *lista) {
+void moda(struct List *lista) {
   double maximo;
   int maximoVeces = 0;
   double iterador = lista->head->key;
@@ -61,7 +61,7 @@ double moda(struct List *lista) {
     }
     aux = aux->next;
   }
-  return maximo;
+  printf("\nmoda: %le\t#: %d", maximo, maximoVeces);
 }
 
 int cantidadDistintos(struct List *lista) {

@@ -1,3 +1,5 @@
+/* Compilación: gcc main.c -lm */
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,18 +32,36 @@ int main() {
       return 0;  // Program will be terminated if 0 is pressed
     }
 
-    printf("\n1. archivoPrueba");
+    printf("\n1. ArchivoA");
     printf("\n2. ArchivoB");
     printf("\n3. ArchivoC");
-    printf("\n0. exit");
+    /* printf("\n4. archivoPrueba"); */
+    printf("\n0. back");
     printf("\nChoose an option: ");
     scanf("\n%c", &input2);
-    if (input2 == '1') {
-      archivo = fopen("ArchivoA.tex", "r");
-    } else if (input2 == '2') {
-      archivo = fopen("ArchivoB.tex", "r");
-    } else if (input2 == '2') {
-      archivo = fopen("ArchivoC.tex", "r");
+    switch (input2) {
+      case '1': {
+        archivo = fopen("ArchivoA.tex", "r");
+        break;
+      }
+      case '2': {
+        archivo = fopen("ArchivoB.tex", "r");
+        break;
+      }
+      case '3':
+        archivo = fopen("ArchivoC.tex", "r");
+        break;
+      case '4':
+        archivo = fopen("archivoPrueba.tex", "r");
+        break;
+
+      case '0': {
+        continue;
+        break;
+      }
+      default:
+        printf("\n############### Invalid option ###############\n");
+        break;
     }
     switch (input) {
       case '1':  // Mergesort.
@@ -58,9 +78,9 @@ int main() {
           if (showStatistics == 'y') {
             cuartilesList(lista);
             decilesList(lista);
-            printf("\nmaximum: %f", lista->tail->key);
-            printf("\nminimum: %f", lista->head->key);
-            printf("\nmode: %lf", moda(lista));
+            printf("\nmaximum: %le", lista->tail->key);
+            printf("\nminimum: %le", lista->head->key);
+            moda(lista);
             printf("\n# of different numbers: %d", cantidadDistintos(lista));
           }
           freeList(lista);
@@ -81,9 +101,9 @@ int main() {
           if (showStatistics == 'y') {
             cuartilesList(lista);
             decilesList(lista);
-            printf("\nmaximum: %f", lista->tail->key);
-            printf("\nminimum: %f", lista->head->key);
-            printf("\nmode: %f", moda(lista));
+            printf("\nmaximum: %le", lista->tail->key);
+            printf("\nminimum: %le", lista->head->key);
+            moda(lista);
             printf("\n# of different numbers: %d", cantidadDistintos(lista));
           }
           freeList(lista);
@@ -91,21 +111,28 @@ int main() {
         break;
       case '3':  // AVL
         if (input == '3') {
+          lista = GenerateList(archivo);
           time_spent = 0.0;
           begin = clock();
-          arbol = GenerateAVL(archivo);
+          arbol = GenerateAVL(lista);
           end = clock();
           time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
           printf("Time elapsed is %f seconds", time_spent);
           printf(", show statistics? (y/n): ");
           scanf("\n%c", &showStatistics);
           if (showStatistics == 'y') {
-            printf("\nmaximum: %f", maxAVL(arbol));
-            printf("\nminimum: %f", minAVL(arbol));
-            printf("\n");
-            printInorder(arbol);
+            struct AVLNode *notaMax = maxAVL(arbol);
+            struct AVLNode *notaMin = minAVL(arbol);
+            printf("\nmaximum: %lf\t#: %d", notaMax->key, notaMax->count);
+            printf("\nminimum: %lf\t#: %d", notaMin->key, notaMin->count);
+            statisticsInorder(arbol, lista->n);
+            /* printf("\n"); */
+            /* printInorder(arbol); */
+            modaAVL(arbol);
+            diffNumbersAVL(arbol);
           }
           freeAVL(arbol);
+          freeList(lista);
         }
         break;
       default:
